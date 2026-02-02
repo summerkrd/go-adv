@@ -1,6 +1,7 @@
 package server
 
 import (
+	"go-adv/3-validation-api/verify"
 	"net/http"
 )
 
@@ -14,11 +15,7 @@ func NewServer() *Server {
 	}
 }
 
-func (s *Server) Start() error {
-
-	err := http.ListenAndServe(":8080", &s.Router)
-	if err != nil {
-		return err
-	}
-	return nil
+func (s *Server) RegisterRoutes(verifier *verify.Verifier) {
+	s.Router.HandleFunc("/send", verifier.SendEmail)
+	s.Router.HandleFunc("/verify/", verifier.VerifyHash)
 }

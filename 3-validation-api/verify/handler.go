@@ -1,31 +1,24 @@
 package verify
 
-import "net/http"
+import (
+	"go-adv/3-validation-api/config"
+	"net/http"
+)
 
 type Verifier struct {
-	srv *http.ServeMux
+	config config.Config
 }
 
-func NewVerifier(s *http.ServeMux) *Verifier {
-	return &Verifier{srv: s}
-}
-
-func (v *Verifier) Handler(w http.ResponseWriter, r *http.Request) {
-
-	switch {
-	case r.Method == http.MethodGet:
-		if r.URL.Path == "/verify" {
-
-			return
-		}
-		http.NotFound(w, r)
-
-	case r.Method == http.MethodPost:
-		if r.URL.Path == "/validate" {
-
-			return
-		}
-		http.NotFound(w, r)
+func NewVerifier(conf config.Config) *Verifier {
+	return &Verifier{
+		config: conf,
 	}
+}
+
+func (v *Verifier) SendEmail(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func (v *Verifier) VerifyHash(w http.ResponseWriter, r *http.Request) {
 
 }
