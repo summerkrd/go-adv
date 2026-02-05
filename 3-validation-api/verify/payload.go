@@ -5,5 +5,6 @@ type EmailRequest struct {
 }
 
 type EmailResponse struct {
-	Hash string `json:"hash"`
+	Email string `json:"email" validate:"required,email"`
+	Hash  string `json:"hash"`
 }
