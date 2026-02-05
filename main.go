@@ -12,5 +12,5 @@ func main() {
 	verifier := verify.NewVerifier(*conf)
 	serv := server.NewServer()
 	serv.RegisterRoutes(verifier)
-	http.ListenAndServe("8081", &serv.Router)
+	http.ListenAndServe(":8081", &serv.Router)
 }

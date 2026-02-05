@@ -49,6 +49,7 @@ func (v *Verifier) SendEmail(w http.ResponseWriter, r *http.Request) {
 
 	newHash := generateNewHash()
 	eres.Hash = newHash
+	eres.Email = ereq.Email
 	bdata, _ := json.Marshal(eres)
 	os.WriteFile("data.json", bdata, 0644)
 	e := email.NewEmail()
@@ -63,14 +64,18 @@ func (v *Verifier) SendEmail(w http.ResponseWriter, r *http.Request) {
 }
 
 func (v *Verifier) VerifyHash(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
 	hash := r.PathValue("hash")
 	bdata, _ := os.ReadFile("data.json")
 	json.Unmarshal(bdata, &eres)
-	w.Header().Set("Content-Type", "application/json")
 	if hash == eres.Hash {
 		json.NewEncoder(w).Encode(map[string]any{
-			"message": "Email verified",
+			"message": fmt.Sprintf("email %s verified", eres.Email),
 		})
+		eres.Hash = ""
+		eres.Email = ""
+		bdata, _ = json.Marshal(eres)
+		os.WriteFile("data.json", bdata, 0644)
 		w.WriteHeader(http.StatusOK)
 		return
 	}
