@@ -8,7 +8,7 @@ import (
 )
 
 type Config struct {
-	Email    string
+	Email    string `json:"email"`
 	Password string
 	Address  string
 }

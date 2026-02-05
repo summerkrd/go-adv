@@ -16,6 +16,6 @@ func NewServer() *Server {
 }
 
 func (s *Server) RegisterRoutes(verifier *verify.Verifier) {
-	s.Router.HandleFunc("/send", verifier.SendEmail)
-	s.Router.HandleFunc("/verify/", verifier.VerifyHash)
+	s.Router.HandleFunc("POST /send", verifier.SendEmail)
+	s.Router.HandleFunc("GET /verify/{hash}", verifier.VerifyHash)
 }
