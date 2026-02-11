@@ -1,5 +1,16 @@
 package main
 
-func main() {
+import (
+	"go-adv/3-validation-api/config"
+	"go-adv/3-validation-api/server"
+	"go-adv/3-validation-api/verify"
+	"net/http"
+)
 
+func main() {
+	conf := config.NewConfig()
+	verifier := verify.NewVerifier(*conf)
+	serv := server.NewServer()
+	serv.RegisterRoutes(verifier)
+	http.ListenAndServe(":8081", &serv.Router)
 }
