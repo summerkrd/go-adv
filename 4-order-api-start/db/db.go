@@ -2,7 +2,6 @@ package db
 
 import (
 	"go-adv/3-validation-api/config"
-	"go-adv/4-order-api-start/models"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -17,9 +16,6 @@ func NewDb(conf *config.Config) *Db {
 	if err != nil {
 		panic("failed to connect database")
 	}
-	err = db.AutoMigrate(&models.Product{})
-	if err != nil {
-		panic(err)
-	}
+
 	return &Db{db}
 }

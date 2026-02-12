@@ -1,10 +1,10 @@
 services:
   postgres:
-    container_name: postgres_go_homework
+    container_name: postgres_homework
     image: postgres:16.4
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 2181090
+      POSTGRES_PASSWORD: my_pass
       PGDATA: /data/postgres_homework
     volumes:
       - ./postgres-data:/data/postgres_homework

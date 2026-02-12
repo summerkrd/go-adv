@@ -9,5 +9,5 @@ type Product struct {
 	gorm.Model
 	Name        string
 	Description string
-	Image       pq.StringArray
+	Image       pq.StringArray `gorm:"type:text[]"`
 }
