@@ -2,24 +2,40 @@ package repository
 
 import (
 	"encoding/json"
+	"go-adv/4-order-api-start/db"
 	"net/http"
 )
 
-type Handler struct {
-	Router http.ServeMux
+func NewRepoHandler(router http.ServeMux, db *db.Db) {
+	repo := NewRepository(db)
+	router.HandleFunc("POST /product/create", CreateProduct(repo))
+	router.HandleFunc("POST /product/update/{id}", UpdateProduct(repo))
+	router.HandleFunc("POST /product/delete/{id}", DeleteProduct(repo))
+	router.HandleFunc("GET /product/{id}", GetByID(repo))
 }
 
-func NewServer() *Handler {
-	return &Handler{
-		Router: *http.NewServeMux(),
+func CreateProduct(repo *Repository) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var product Product
+		json.NewDecoder(r.Body).Decode(&product)
+		repo.Create(&product)
 	}
 }
 
-func (s *Handler) CreateProduct(repository Repository) {
-	s.Router.HandleFunc("POST /create", func(writer http.ResponseWriter, request *http.Request) {
-		var product Product
-		json.NewDecoder(request.Body).Decode(&product)
-		repository.Create(&product)
-	})
+func UpdateProduct(repo *Repository) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
 
+	}
+}
+
+func DeleteProduct(repo *Repository) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+
+	}
+}
+
+func GetByID(repo *Repository) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+
+	}
 }
