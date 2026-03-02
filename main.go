@@ -5,6 +5,7 @@ import (
 	"go-adv/3-validation-api/server"
 	"go-adv/3-validation-api/verify"
 	"go-adv/4-order-api-start/db"
+	"go-adv/4-order-api-start/middleware"
 	"go-adv/4-order-api-start/repository"
 	"net/http"
 )
@@ -16,5 +17,6 @@ func main() {
 	serv := server.NewServer()
 	serv.RegisterRoutes(verifier)
 	repository.NewRepoHandler(serv.Router, dataBase)
-	http.ListenAndServe(":8081", &serv.Router)
+	handler := http.Handler(middleware.Log(&serv.Router))
+	http.ListenAndServe(":8081", handler)
 }
