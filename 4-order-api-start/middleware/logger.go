@@ -26,7 +26,7 @@ func Log(next http.Handler) http.Handler {
 			statusCode:     http.StatusOK,
 		}
 
-		next.ServeHTTP(w, r)
+		next.ServeHTTP(wrapped.ResponseWriter, r)
 
 		logrus.WithFields(logrus.Fields{
 			"method":  r.Method,
