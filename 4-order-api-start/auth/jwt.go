@@ -2,16 +2,21 @@ package auth
 
 import (
 	"errors"
-	"github.com/golang-jwt/jwt/v5"
 	"time"
+
+	"github.com/golang-jwt/jwt/v5"
 )
 
-var jwtSecret = []byte("your-secret-key-change-in-production") // В продакшене брать из .env
+var jwtSecret []byte
 
 type Claims struct {
 	UserID uint   `json:"user_id"`
 	Phone  string `json:"phone"`
 	jwt.RegisteredClaims
+}
+
+func InitJWT(secret string) {
+	jwtSecret = []byte(secret)
 }
 
 // Генерация JWT токена
