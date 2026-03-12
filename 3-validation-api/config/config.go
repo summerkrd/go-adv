@@ -8,9 +8,15 @@ import (
 )
 
 type Config struct {
-	Email    string `json:"email"`
-	Password string
-	Address  string
+	Db
+	Email     string `json:"email"`
+	Password  string
+	Address   string
+	JWTSecret string
+}
+
+type Db struct {
+	DSN string
 }
 
 func NewConfig() *Config {
@@ -20,8 +26,12 @@ func NewConfig() *Config {
 	}
 
 	return &Config{
-		Email:    os.Getenv("EMAIL"),
-		Password: os.Getenv("PASSWORD"),
-		Address:  os.Getenv("ADDRESS"),
+		Db: Db{
+			DSN: os.Getenv("DSN"),
+		},
+		Email:     os.Getenv("EMAIL"),
+		Password:  os.Getenv("PASSWORD"),
+		Address:   os.Getenv("ADDRESS"),
+		JWTSecret: os.Getenv("JWT_SECRET"),
 	}
 }
