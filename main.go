@@ -17,10 +17,6 @@ func main() {
 	// Auth handlers
 	authHandler := auth.NewAuthHandler(dataBase)
 
-	//verifier := verify.NewVerifier(*conf)
-	//serv := server.NewServer()
-	//serv.RegisterRoutes(verifier)
-
 	router := http.NewServeMux()
 
 	// Публичные роуты авторизации
@@ -34,8 +30,4 @@ func main() {
 
 	handler := http.Handler(middleware.Log(router))
 	http.ListenAndServe(":8081", handler)
-
-	//repository.NewRepoHandler(serv.Router, dataBase)
-	//handler := http.Handler(middleware.Log(&serv.Router))
-	//http.ListenAndServe(":8081", handler)
 }
